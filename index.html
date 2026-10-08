@@ -1,128 +1,450 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buon Compleanno Amore</title>
+  <style>
+    body {
+      background-color: #111827;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-top: 8vh;
+    }
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Untitled</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style.css">
-  </head>
+    /* --- SFONDO STELLATO --- */
+    .starfield {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background-color: #f1c40f;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #fff;
+      animation: twinkle 1.5s infinite alternate;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.7); }
+      100% { opacity: 1; transform: scale(1.3); }
+    }
 
-  <body>
-    <!-- Traccia audio preimpostata -->
-<audio id="birthday-audio" src="https://mixkit.co" preload="auto"></audio>
+    /* --- SCRITTA CENTRATA SFUMATA --- */
+    .typing-text {
+      font-size: 2.3rem;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #ff6b81;
+      margin: 0 auto 70px auto;
+      text-align: center;
+      width: 0;
+      z-index: 2;
+      background: linear-gradient(45deg, #ff9ff3, #feca57, #ff6b81);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));
+      animation: typing 4.5s steps(27) forwards, blink 0.5s step-end infinite alternate;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 27ch; }
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
 
-<!-- Cielo ricchissimo di stelle dorate -->
-<div class="starfield">
-  <div class="star" style="top: 10%; left: 8%; animation-delay: 0.2s;"></div>
-  <div class="star" style="top: 25%; left: 85%; animation-delay: 0.7s;"></div>
-  <div class="star" style="top: 45%; left: 5%; animation-delay: 1.1s;"></div>
-  <div class="star" style="top: 12%; left: 40%; animation-delay: 0.5s;"></div>
-  <div class="star" style="top: 30%; left: 70%; animation-delay: 1.4s;"></div>
-  <div class="star" style="top: 55%; left: 92%; animation-delay: 0.9s;"></div>
-  <div class="star" style="top: 20%; left: 22%; animation-delay: 1.8s;"></div>
-  <div class="star" style="top: 38%; left: 55%; animation-delay: 0.3s;"></div>
-  <div class="star" style="top: 5%; left: 25%; animation-delay: 2.1s;"></div>
-  <div class="star" style="top: 15%; left: 60%; animation-delay: 1.3s;"></div>
-  <div class="star" style="top: 28%; left: 15%; animation-delay: 0.6s;"></div>
-  <div class="star" style="top: 50%; left: 78%; animation-delay: 1.7s;"></div>
-  <div class="star" style="top: 62%; left: 12%; animation-delay: 0.4s;"></div>
-  <div class="star" style="top: 8%; left: 75%; animation-delay: 0.8s;"></div>
-  <div class="star" style="top: 22%; left: 95%; animation-delay: 1.2s;"></div>
-  <div class="star" style="top: 48%; left: 35%; animation-delay: 1.9s;"></div>
-</div>
+    /* --- CONTENITORE DI SCENA --- */
+    .scene-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      margin-top: 40px;
+      z-index: 10;
+      width: 200px;
+    }
 
-<!-- Scritta d'amore centrale -->
-<div class="typing-text">Buon Compleanno Amore ❤️</div>
+    /* --- STRUTTURA TORTA --- */
+    .cake-container {
+      position: relative;
+      cursor: pointer;
+      transform-origin: bottom center;
+      transform: translateX(-80px); 
+      transition: transform 0.8s ease-in-out;
+    }
 
-<div id="confetti-container"></div>
+    .cake-move-center {
+      transform: translateX(0px);
+    }
 
-<!-- Contenitore di scena principale -->
-<div class="scene-wrapper">
-  
-  <!-- Contenitore torta interattivo -->
-  <div id="cake-main" class="cake-container" onclick="festa()">
-    <div class="plate"></div>
-    <div class="cake-number">19</div>
-    <div class="cake">
-      <div class="layer layer-bottom"></div>
-      <div class="layer layer-middle"></div>
-      <div class="layer layer-top"></div>
-      <div class="icing-wave">
-        <div class="sprinkle" style="top: 5px; left: 20px; background-color: #f1c40f;"></div>
-        <div class="sprinkle" style="top: 12px; left: 60px; background-color: #fff; width: 6px; height: 6px; border-radius: 50%;"></div>
-        <div class="sprinkle" style="top: 4px; left: 100px; background-color: #3498db;"></div>
-        <div class="sprinkle" style="top: 15px; left: 130px; background-color: #2ecc71;"></div>
-        <div class="sprinkle" style="top: 6px; left: 170px; background-color: #fff;"></div>
-        <div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div>
-      </div>
-      <div class="cream-drops">
-        <div class="drop"></div><div class="drop"></div><div class="drop"></div><div class="drop"></div><div class="drop"></div>
-      </div>
-    </div>
-    
-    <div class="flower-decoration left-flower">
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="center-bud"></div>
-    </div>
-    <div class="flower-decoration right-flower">
-      <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="center-bud"></div>
-    </div>
+    .cake-bounce .cake {
+      animation: cakeJump 0.6s ease-out forwards;
+    }
+    @keyframes cakeJump {
+      0% { transform: scale(1, 1); }
+      20% { transform: scale(1.15, 0.8); }
+      50% { transform: scale(0.9, 1.2) translateY(-30px); }
+      80% { transform: scale(1.05, 0.95) translateY(0); }
+      100% { transform: scale(1, 1); }
+    }
 
-    <div class="candle candle-left">
-      <div class="wick"></div>
-      <div id="flame-left" class="flame"><div class="sparkle-glow"></div></div>
-    </div>
-    <div class="candle candle-right">
-      <div class="wick"></div>
-      <div id="flame-right" class="flame"><div class="sparkle-glow"></div></div>
-    </div>
+    .cake-number {
+      position: absolute;
+      top: -55px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      font-weight: bold;
+      color: #d1d8e0; 
+      text-shadow: 1px 1px 0px #ffffff, -1px -1px 0px #778ca3, 2px 2px 0px #4b6584, 3px 3px 6px rgba(0, 0, 0, 0.4);
+      z-index: 5;
+    }
+    .plate {
+      width: 280px;
+      height: 16px;
+      background-color: #f1f2f6; 
+      border-radius: 50% / 10px;
+      position: absolute;
+      bottom: -5px;
+      left: -40px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+    }
+    .cake {
+      position: relative;
+      width: 200px;
+      height: 130px;
+      background-color: #fff5cc; 
+      border-radius: 15px 15px 5px 5px;
+      box-shadow: inset 0 -10px 20px rgba(0,0,0,0.05), 0 5px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .layer {
+      position: absolute;
+      width: 100%;
+      height: 10px;
+      background-color: #ff6b81; 
+    }
+    .layer-bottom { bottom: 25px; }
+    .layer-middle { bottom: 60px; }
+    .layer-top    { bottom: 95px; }
+
+    /* GLASSA E ZUCCHERINI */
+    .icing-wave {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 35px;
+      background-color: #ff4757; 
+      display: flex;
+    }
+    .wave {
+      width: 40px;
+      height: 20px;
+      background-color: #ff4757;
+      border-radius: 0 0 50% 50%;
+      margin-top: 25px;
+      z-index: 2;
+    }
+    .sprinkle {
+      position: absolute;
+      width: 8px;
+      height: 4px;
+      border-radius: 3px;
+      z-index: 3;
+      transform: rotate(15deg);
+    }
+    .cream-drops {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+    .drop {
+      width: 25px;
+      height: 15px;
+      background-color: #fff;
+      border-radius: 50% 50% 0 0;
+    }
+
+    /* FIORI DECORATIVI */
+    .flower-decoration {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      bottom: 5px;
+      z-index: 12;
+    }
+    .left-flower { left: -25px; }
+    .right-flower { right: -25px; }
+    .petal {
+      position: absolute;
+      background: radial-gradient(circle, #ff9ff3, #f12711);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+    .petal:nth-child(1) { top: 0; left: 8px; }
+    .petal:nth-child(2) { top: 8px; left: 16px; }
+    .petal:nth-child(3) { top: 16px; left: 8px; }
+    .petal:nth-child(4) { top: 8px; left: 0; }
+    .center-bud {
+      position: absolute;
+      background-color: #f1c40f;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      top: 10px;
+      left: 10px;
+    }
+
+    /* CANDELINE E SCINTILLE */
+    .candle {
+      position: absolute;
+      background: repeating-linear-gradient(45deg, #ffffff, #ffffff 5px, #ff4757 5px, #ff4757 10px);
+      width: 12px;
+      height: 65px;
+      top: -65px;
+      border-radius: 4px 4px 0 0;
+    }
+    .candle-left { left: 25px; }
+    .candle-right { right: 25px; }
+    .wick {
+      position: absolute;
+      background-color: #111;
+      width: 2px;
+      height: 10px;
+      top: -10px;
+      left: 5px;
+    }
+    .flame {
+      position: absolute;
+      background-color: #f39c12;
+      width: 18px;
+      height: 28px;
+      border-radius: 80% 0 55% 50% / 55% 0 80% 50%;
+      top: -36px;
+      left: -3px;
+      transform: rotate(-45deg);
+      box-shadow: 0 0 15px rgba(243, 156, 18, 0.8);
+      animation: flicker 0.6s infinite alternate;
+      transform-origin: center bottom;
+    }
+    .sparkle-glow {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      top: -10px;
+      left: -6px;
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(241,196,15,0) 70%);
+      animation: pulse 0.8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes flicker {
+      0% { transform: rotate(-45deg) scale(1); box-shadow: 0 0 12px rgba(243, 156, 18, 0.7); }
+      100% { transform: rotate(-40deg) scale(1.1) skewX(2deg); box-shadow: 0 0 22px rgba(241, 196, 15, 0.9); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.6); opacity: 0.5; }
+      100% { transform: scale(1.3); opacity: 0.9; }
+    }
+
+    /* --- LETTERA DIGITALE --- */
+    .love-letter {
+      background-color: #fff9e6; 
+      width: 140px;
+      padding: 15px 10px;
+      border-radius: 8px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 0 10px rgba(0,0,0,0.05);
+      transform: rotate(4deg); 
+      text-align: center;
+      border: 1px dashed #d4af37; 
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, visibility 0.5s;
+      position: absolute;
+      left: 140px; 
+      bottom: 0;
+    }
+    .love-letter p {
+      margin: 0;
+      font-family: 'Georgia', serif; 
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #5d4037; 
+      line-height: 1.3;
+    }
+    .letter-seal {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+      background-color: #fff9e6;
+      padding: 0 5px;
+    }
+
+    .letter-fade-out {
+      opacity: 0;
+      transform: rotate(10deg) translateY(20px);
+      visibility: hidden;
+    }
+
+    /* CORIANDOLI NATURALI */
+    #confetti-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+    }
+    .confetto {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      opacity: 0.85;
+      animation: cadutaNaturale linear infinite;
+    }
+    @keyframes cadutaNaturale {
+      0% { top: -20px; transform: translateX(0) rotate(0deg) rotateY(0deg); }
+      25% { transform: translateX(25px) rotate(90deg) rotateY(180deg); }
+      50% { transform: translateX(-20px) rotate(270deg) rotateY(360deg); }
+      75% { transform: translateX(15px) rotate(450deg) rotateY(180deg); }
+      100% { top: 105vh; transform: translateX(0px) rotate(720deg) rotateY(0deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Traccia audio preimpostata -->
+  <audio id="birthday-audio" src="https://mixkit.co" preload="auto"></audio>
+
+  <!-- Cielo ricchissimo di stelle dorate -->
+  <div class="starfield">
+    <div class="star" style="top: 10%; left: 8%; animation-delay: 0.2s;"></div>
+    <div class="star" style="top: 25%; left: 85%; animation-delay: 0.7s;"></div>
+    <div class="star" style="top: 45%; left: 5%; animation-delay: 1.1s;"></div>
+    <div class="star" style="top: 12%; left: 40%; animation-delay: 0.5s;"></div>
+    <div class="star" style="top: 30%; left: 70%; animation-delay: 1.4s;"></div>
+    <div class="star" style="top: 55%; left: 92%; animation-delay: 0.9s;"></div>
+    <div class="star" style="top: 20%; left: 22%; animation-delay: 1.8s;"></div>
+    <div class="star" style="top: 38%; left: 55%; animation-delay: 0.3s;"></div>
+    <div class="star" style="top: 5%; left: 25%; animation-delay: 2.1s;"></div>
+    <div class="star" style="top: 15%; left: 60%; animation-delay: 1.3s;"></div>
+    <div class="star" style="top: 28%; left: 15%; animation-delay: 0.6s;"></div>
+    <div class="star" style="top: 50%; left: 78%; animation-delay: 1.7s;"></div>
+    <div class="star" style="top: 62%; left: 12%; animation-delay: 0.4s;"></div>
+    <div class="star" style="top: 8%; left: 75%; animation-delay: 0.8s;"></div>
+    <div class="star" style="top: 22%; left: 95%; animation-delay: 1.2s;"></div>
+    <div class="star" style="top: 48%; left: 35%; animation-delay: 1.9s;"></div>
   </div>
 
-  <!-- Lettera posizionata di lato -->
-  <div id="letter-main" class="love-letter">
-    <div class="letter-seal">❤️</div>
-    <p>Ora prendi una fetta di torta</p>
+  <!-- Scritta d'amore centrale -->
+  <div class="typing-text">Buon Compleanno Amore ❤️</div>
+
+  <div id="confetti-container"></div>
+
+  <!-- Contenitore di scena principale -->
+  <div class="scene-wrapper">
+    
+    <!-- Contenitore torta interattivo -->
+    <div id="cake-main" class="cake-container" onclick="festa()">
+      <div class="plate"></div>
+      <div class="cake-number">19</div>
+      <div class="cake">
+        <div class="layer layer-bottom"></div>
+        <div class="layer layer-middle"></div>
+        <div class="layer layer-top"></div>
+        <div class="icing-wave">
+          <div class="sprinkle" style="top: 5px; left: 20px; background-color: #f1c40f;"></div>
+          <div class="sprinkle" style="top: 12px; left: 60px; background-color: #fff; width: 6px; height: 6px; border-radius: 50%;"></div>
+          <div class="sprinkle" style="top: 4px; left: 100px; background-color: #3498db;"></div>
+          <div class="sprinkle" style="top: 15px; left: 130px; background-color: #2ecc71;"></div>
+          <div class="sprinkle" style="top: 6px; left: 170px; background-color: #fff;"></div>
+          <div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div>
+        </div>
+        <div class="cream-drops">
+          <div class="drop"></div><div class="drop"></div><div class="drop"></div><div class="drop"></div><div class="drop"></div>
+        </div>
+      </div>
+      
+      <div class="flower-decoration left-flower">
+        <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="center-bud"></div>
+      </div>
+      <div class="flower-decoration right-flower">
+        <div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="petal"></div><div class="center-bud"></div>
+      </div>
+
+      <div class="candle candle-left">
+        <div class="wick"></div>
+        <div id="flame-left" class="flame"><div class="sparkle-glow"></div></div>
+      </div>
+      <div class="candle candle-right">
+        <div class="wick"></div>
+        <div id="flame-right" class="flame"><div class="sparkle-glow"></div></div>
+      </div>
+    </div>
+
+    <!-- Lettera posizionata di lato -->
+    <div id="letter-main" class="love-letter">
+      <div class="letter-seal">❤️</div>
+      <p>Ora prendi una fetta di torta</p>
+    </div>
+
   </div>
 
-</div>
+  <script>
+    function festa() {
+      // 1. Attiva la sparizione fluida della lettera
+      document.getElementById('letter-main').classList.add('letter-fade-out');
+      
+      // 2. Fa scivolare la torta al centro
+      document.getElementById('cake-main').classList.add('cake-move-center');
 
-<script>
-  function festa() {
-    // 1. Attiva la sparizione fluida della lettera
-    document.getElementById('letter-main').classList.add('letter-fade-out');
-    
-    // 2. Fa scivolare la torta esattamente al centro geometrico della scritta
-    document.getElementById('cake-main').classList.add('cake-move-center');
+      // 3. Attiva l'effetto rimbalzo fisico
+      document.getElementById('cake-main').classList.add('cake-bounce');
 
-    // 3. Attiva l'effetto rimbalzo fisico sulla torta
-    document.getElementById('cake-main').classList.add('cake-bounce');
+      // 4. Spegne le fiamme delle candeline
+      document.getElementById('flame-left').style.display = 'none';
+      document.getElementById('flame-right').style.display = 'none';
 
-    // 4. Spegne le fiamme delle candeline
-    document.getElementById('flame-left').style.display = 'none';
-    document.getElementById('flame-right').style.display = 'none';
+      // 5. Riproduce l'audio
+      const audio = document.getElementById('birthday-audio');
+      audio.play().catch(e => console.log("Interazione richiesta"));
 
-    // 5. Riproduce l'audio di festa
-    const audio = document.getElementById('birthday-audio');
-    audio.play().catch(e => console.log("Interazione richiesta"));
-
-    // 6. Avvia la caduta naturale dei coriandoli
-    const container = document.getElementById('confetti-container');
-    if (container.children.length === 0) {
-      const colori = ['#ff6b81', '#ff4757', '#f1c40f', '#2ecc71', '#3498db', '#e67e22', '#9b59b6'];
-      for (let i = 0; i < 110; i++) {
-        const confetto = document.createElement('div');
-        confetto.classList.add('confetto');
-        confetto.style.left = Math.random() * 100 + 'vw';
-        confetto.style.backgroundColor = colori[Math.floor(Math.random() * colori.length)];
-        confetto.style.animationDelay = Math.random() * 3 + 's';
-        confetto.style.animationDuration = (Math.random() * 2 + 3) + 's';
-        confetto.style.transform = `scale(${Math.random() * 0.8 + 0.5})`;
-        container.appendChild(confetto);
+      // 6. Avvia la caduta dei coriandoli
+      const container = document.getElementById('confetti-container');
+      if (container.children.length === 0) {
+        const colori = ['#ff6b81', '#ff4757', '#f1c40f', '#2ecc71', '#3498db', '#e67e22', '#9b59b6'];
+        for (let i = 0; i < 110; i++) {
+          const confetto = document.createElement('div');
+          confetto.classList.add('confetto');
+          confetto.style.left = Math.random() * 100 + 'vw';
+          confetto.style.backgroundColor = colori[Math.floor(Math.random() * colori.length)];
+          confetto.style.animationDelay = Math.random() * 3 + 's';
+          confetto.style.animationDuration = (Math.random() * 2 + 3) + 's';
+          confetto.style.transform = `scale(${Math.random() * 0.8 + 0.5})`;
+          container.appendChild(confetto);
+        }
       }
     }
-  }
-</script>
-
-    <script src="/script.js"></script>
-  </body>
-
+  </script>
+</body>
 </html>
